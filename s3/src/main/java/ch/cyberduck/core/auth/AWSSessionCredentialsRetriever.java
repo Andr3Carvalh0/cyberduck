@@ -24,6 +24,7 @@ import ch.cyberduck.core.DisabledLoginCallback;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostParser;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.PathNormalizer;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.TranscriptListener;
@@ -71,7 +72,7 @@ public class AWSSessionCredentialsRetriever {
         final Host address = new HostParser(factory).get(url);
         final Path access = new Path(PathNormalizer.normalize(address.getDefaultPath()), EnumSet.of(Path.Type.file));
         address.setDefaultPath(String.valueOf(Path.DELIMITER));
-        final DAVSession connection = new DAVSession(address, trust, key);
+        final DAVSession connection = new DAVSession(address, trust, key, PathCache.empty());
         connection.withListener(transcript).open(ProxyFactory.get().find(url), new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
         final InputStream in = new DAVReadFeature(connection).read(access, new TransferStatus(), new DisabledConnectionCallback());
         try {

@@ -37,7 +37,7 @@ public class OneDriveSessionTest extends AbstractOneDriveTest {
 
     @Test
     public void testFeatures() {
-        final OneDriveSession session = new OneDriveSession(new Host(new OneDriveProtocol()), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final OneDriveSession session = new OneDriveSession(new Host(new OneDriveProtocol()), new DisabledX509TrustManager(), new DefaultX509KeyManager(), cache);
         assertNotNull(session.getFeature(Read.class));
         assertNotNull(session.getFeature(Write.class));
         assertNotNull(session.getFeature(Directory.class));

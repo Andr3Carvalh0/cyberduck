@@ -18,13 +18,12 @@ package ch.cyberduck.core.onedrive;
 import ch.cyberduck.core.AbstractPath;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.ssl.DefaultX509KeyManager;
 import ch.cyberduck.core.ssl.DisabledX509TrustManager;
-import ch.cyberduck.test.IntegrationTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.util.EnumSet;
 
@@ -36,7 +35,8 @@ public class SharepointSessionTest {
 
     @Before
     public void setup() {
-        session = new SharepointSession(new Host(new SharepointProtocol()), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        session = new SharepointSession(new Host(new SharepointProtocol()), new DisabledX509TrustManager(),
+            new DefaultX509KeyManager(), PathCache.empty());
     }
 
     @Test

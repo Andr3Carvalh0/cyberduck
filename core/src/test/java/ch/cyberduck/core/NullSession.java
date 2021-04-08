@@ -11,7 +11,7 @@ import ch.cyberduck.core.threading.CancelCallback;
 public class NullSession extends Session<Void> implements ListService {
 
     public NullSession(Host h) {
-        super(h);
+        super(h, PathCache.empty());
     }
 
     @Override

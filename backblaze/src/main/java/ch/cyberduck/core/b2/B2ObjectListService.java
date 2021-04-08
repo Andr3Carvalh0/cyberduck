@@ -204,7 +204,6 @@ public class B2ObjectListService implements ListService {
 
     @Override
     public ListService withCache(final Cache<Path> cache) {
-        fileid.withCache(cache);
         return this;
     }
 }

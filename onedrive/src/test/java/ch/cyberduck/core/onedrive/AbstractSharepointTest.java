@@ -18,6 +18,7 @@ package ch.cyberduck.core.onedrive;
 import ch.cyberduck.core.DisabledPasswordStore;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostPasswordStore;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Protocol;
 import ch.cyberduck.core.Scheme;
 import ch.cyberduck.core.ssl.X509KeyManager;
@@ -26,6 +27,8 @@ import ch.cyberduck.core.ssl.X509TrustManager;
 import java.io.InputStream;
 
 public abstract class AbstractSharepointTest extends AbstractGraphTest {
+
+    protected final PathCache cache = new PathCache(100);
     protected SharepointSession session;
 
     @Override
@@ -40,7 +43,7 @@ public abstract class AbstractSharepointTest extends AbstractGraphTest {
 
     @Override
     protected GraphSession session(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        return (session = new SharepointSession(host, trust, key));
+        return (session = new SharepointSession(host, trust, key, cache));
     }
 
     @Override

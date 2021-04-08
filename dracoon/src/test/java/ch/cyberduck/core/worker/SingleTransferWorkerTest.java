@@ -128,7 +128,7 @@ public class SingleTransferWorkerTest extends AbstractSDSTest {
         final AtomicBoolean failed = new AtomicBoolean();
         final SDSSession conn = new SDSSession(session.getHost().withCredentials(
             new Credentials(System.getProperties().getProperty("sds.user"), System.getProperties().getProperty("sds.key"))
-        ), new DisabledX509TrustManager(), new DefaultX509KeyManager()) {
+        ), new DisabledX509TrustManager(), new DefaultX509KeyManager(), cache) {
             @Override
             @SuppressWarnings("unchecked")
             public <T> T _getFeature(final Class<T> type) {
@@ -202,7 +202,7 @@ public class SingleTransferWorkerTest extends AbstractSDSTest {
         final Host host = new Host(new SDSProtocol(), session.getHost().getHostname(), new Credentials(
             System.getProperties().getProperty("sds.user"), System.getProperties().getProperty("sds.key")
         ));
-        final SDSSession session = new SDSSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager()) {
+        final SDSSession session = new SDSSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), cache) {
             @Override
             @SuppressWarnings("unchecked")
             public <T> T _getFeature(final Class<T> type) {

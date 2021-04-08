@@ -43,7 +43,6 @@ public class SDSFindFeature implements Find {
 
     @Override
     public Find withCache(final Cache<Path> cache) {
-        nodeid.withCache(cache);
         return this;
     }
 }

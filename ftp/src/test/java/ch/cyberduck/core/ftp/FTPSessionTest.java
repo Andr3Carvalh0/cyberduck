@@ -176,7 +176,7 @@ public class FTPSessionTest extends AbstractFTPTest {
                     callback.set(true);
                     throw new ConnectionCanceledException();
                 }
-            }));
+            }), PathCache.empty());
         final LoginConnectionService c = new LoginConnectionService(
             new DisabledLoginCallback(),
             new DisabledHostKeyCallback(),

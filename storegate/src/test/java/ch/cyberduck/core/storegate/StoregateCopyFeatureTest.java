@@ -41,7 +41,7 @@ public class StoregateCopyFeatureTest extends AbstractStoregateTest {
 
     @Test
     public void testCopyFileServerSide() throws Exception {
-        final StoregateIdProvider nodeid = new StoregateIdProvider(session).withCache(cache);
+        final StoregateIdProvider nodeid = new StoregateIdProvider(session);
         final Path room = new StoregateDirectoryFeature(session, nodeid).mkdir(new Path(
             String.format("/My files/%s", new AlphanumericRandomStringService().random()), EnumSet.of(Path.Type.directory, Path.Type.volume, Path.Type.triplecrypt)), null, new TransferStatus());
         final Path test = new StoregateTouchFeature(session, nodeid).touch(new Path(room, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file)), new TransferStatus());
@@ -57,7 +57,7 @@ public class StoregateCopyFeatureTest extends AbstractStoregateTest {
 
     @Test
     public void testCopyFileWithRename() throws Exception {
-        final StoregateIdProvider fileid = new StoregateIdProvider(session).withCache(cache);
+        final StoregateIdProvider fileid = new StoregateIdProvider(session);
         final Path room = new StoregateDirectoryFeature(session, fileid).mkdir(new Path(
             String.format("/My files/%s", new AlphanumericRandomStringService().random()), EnumSet.of(Path.Type.directory, Path.Type.volume, Path.Type.triplecrypt)), null, new TransferStatus());
         final Path test = new StoregateTouchFeature(session, fileid).touch(new Path(room, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file)), new TransferStatus());
@@ -70,7 +70,7 @@ public class StoregateCopyFeatureTest extends AbstractStoregateTest {
 
     @Test
     public void testCopyServerSideToExistingFile() throws Exception {
-        final StoregateIdProvider fileid = new StoregateIdProvider(session).withCache(cache);
+        final StoregateIdProvider fileid = new StoregateIdProvider(session);
         final Path top = new StoregateDirectoryFeature(session, fileid).mkdir(new Path(
             String.format("/My files/%s", new AlphanumericRandomStringService().random()), EnumSet.of(Path.Type.directory, Path.Type.volume, Path.Type.triplecrypt)), null, new TransferStatus());
         final Path sourceFolder = new Path(top, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory));
@@ -92,7 +92,7 @@ public class StoregateCopyFeatureTest extends AbstractStoregateTest {
 
     @Test
     public void testCopyWithRenameToExistingFile() throws Exception {
-        final StoregateIdProvider fileid = new StoregateIdProvider(session).withCache(cache);
+        final StoregateIdProvider fileid = new StoregateIdProvider(session);
         final Path top = new StoregateDirectoryFeature(session, fileid).mkdir(new Path(
             String.format("/My files/%s", new AlphanumericRandomStringService().random()), EnumSet.of(Path.Type.directory, Path.Type.volume, Path.Type.triplecrypt)), null, new TransferStatus());
         final Path folder = new Path(top, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory));
@@ -111,7 +111,7 @@ public class StoregateCopyFeatureTest extends AbstractStoregateTest {
 
     @Test
     public void testCopyDirectoryServerSide() throws Exception {
-        final StoregateIdProvider fileid = new StoregateIdProvider(session).withCache(cache);
+        final StoregateIdProvider fileid = new StoregateIdProvider(session);
         final Path top = new StoregateDirectoryFeature(session, fileid).mkdir(new Path(
             String.format("/My files/%s", new AlphanumericRandomStringService().random()), EnumSet.of(Path.Type.directory, Path.Type.volume, Path.Type.triplecrypt)), null, new TransferStatus());
         final Path directory = new StoregateDirectoryFeature(session, fileid).mkdir(new Path(top, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory)), null, new TransferStatus());

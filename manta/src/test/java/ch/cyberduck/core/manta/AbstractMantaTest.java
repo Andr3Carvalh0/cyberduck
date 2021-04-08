@@ -24,6 +24,7 @@ import ch.cyberduck.core.DisabledLoginCallback;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Local;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.local.LocalTouchFactory;
@@ -72,7 +73,7 @@ public abstract class AbstractMantaTest {
 
         final String user = System.getProperty("manta.user");
         final Host host = new Host(profile, hostname, new Credentials(user).withIdentity(file));
-        session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
         session.login(Proxy.DIRECT, new DisabledLoginCallback(), new DisabledCancelCallback());
         final String testRoot = "cyberduck-test-" + new AlphanumericRandomStringService().random();

@@ -15,6 +15,7 @@ package ch.cyberduck.core.onedrive;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.ListService;
@@ -34,8 +35,9 @@ import static ch.cyberduck.core.onedrive.SharepointListService.DRIVES_CONTAINER;
 import static ch.cyberduck.core.onedrive.SharepointListService.SITES_CONTAINER;
 
 public class SharepointSiteSession extends AbstractSharepointSession {
-    public SharepointSiteSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public SharepointSiteSession(final Host host, final X509TrustManager trust,
+                                 final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

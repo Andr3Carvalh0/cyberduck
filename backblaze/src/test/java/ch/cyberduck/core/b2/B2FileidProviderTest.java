@@ -39,7 +39,7 @@ public class B2FileidProviderTest extends AbstractB2Test {
 
     @Test
     public void getFileIdFile() throws Exception {
-        final B2FileidProvider fileid = new B2FileidProvider(session).withCache(cache);
+        final B2FileidProvider fileid = new B2FileidProvider(session);
         final Path bucket = new B2DirectoryFeature(session, fileid).mkdir(new Path(new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory, Path.Type.volume)), null, new TransferStatus());
         final Path file = new B2TouchFeature(session, fileid).touch(new Path(bucket, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file)), new TransferStatus());
         assertNotNull(fileid.getFileid(file, new DisabledListProgressListener()));
@@ -55,7 +55,7 @@ public class B2FileidProviderTest extends AbstractB2Test {
 
     @Test
     public void getFileIdDirectory() throws Exception {
-        final B2FileidProvider fileid = new B2FileidProvider(session).withCache(cache);
+        final B2FileidProvider fileid = new B2FileidProvider(session);
         final Path bucket = new B2DirectoryFeature(session, fileid).mkdir(new Path(new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory, Path.Type.volume)), null, new TransferStatus());
         final Path folder = new B2DirectoryFeature(session, fileid).mkdir(new Path(bucket, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory)), null, new TransferStatus());
         assertNotNull(fileid.getFileid(folder, new DisabledListProgressListener()));

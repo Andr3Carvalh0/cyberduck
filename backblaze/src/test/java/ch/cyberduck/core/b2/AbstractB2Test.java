@@ -69,7 +69,7 @@ public class AbstractB2Test {
             new Host(profile, profile.getDefaultHostname(),
                 new Credentials(
                     System.getProperties().getProperty("b2.user"), System.getProperties().getProperty("b2.key")
-                )), new DefaultX509TrustManager(), new DefaultX509KeyManager());
+                )), new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {

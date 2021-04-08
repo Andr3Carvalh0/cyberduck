@@ -24,6 +24,7 @@ import ch.cyberduck.core.DisabledProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.Scheme;
@@ -39,9 +40,9 @@ import java.util.HashSet;
 
 import static org.junit.Assert.fail;
 
-public class
-AbstractGoogleStorageTest {
+public class AbstractGoogleStorageTest {
 
+    protected final PathCache cache = new PathCache(100);
     protected GoogleStorageSession session;
 
     @After
@@ -55,9 +56,9 @@ AbstractGoogleStorageTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/Google Cloud Storage.cyberduckprofile"));
         final Host host = new Host(profile, profile.getDefaultHostname(), new Credentials(
-                System.getProperties().getProperty("google.projectid"), null
+            System.getProperties().getProperty("google.projectid"), null
         ));
-        session = new GoogleStorageSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new GoogleStorageSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String username, final String title, final String reason, final LoginOptions options) {

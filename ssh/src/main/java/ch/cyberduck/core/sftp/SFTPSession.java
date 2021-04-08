@@ -98,8 +98,8 @@ public class SFTPSession extends Session<SSHClient> {
     private final X509TrustManager trust;
     private final X509KeyManager key;
 
-    public SFTPSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h);
+    public SFTPSession(final Host h, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(h, cache);
         this.trust = trust;
         this.key = key;
     }

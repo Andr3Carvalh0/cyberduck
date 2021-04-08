@@ -34,7 +34,7 @@ public final class SessionFactory {
         //
     }
 
-    public static Session<?> create(final Host host, final X509TrustManager trust, final X509KeyManager key) {
+    public static Session<?> create(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
         if(log.isDebugEnabled()) {
             log.debug(String.format("Create session for %s", host));
         }
@@ -44,19 +44,19 @@ public final class SessionFactory {
         try {
             final Class<Session> name = (Class<Session>) Class.forName(String.format("%sSession", prefix));
             final Constructor<Session> constructor = ConstructorUtils.getMatchingAccessibleConstructor(name,
-                    host.getClass(), trust.getClass(), key.getClass());
+                host.getClass(), trust.getClass(), key.getClass(), cache.getClass());
             final Session<?> session;
             if(null == constructor) {
-                log.warn(String.format("No matching constructor for parameter %s, %s, %s", host.getClass(), trust.getClass(), key.getClass()));
+                log.warn(String.format("No matching constructor for parameter %s, %s, %s, %s", host.getClass(), trust.getClass(), key.getClass(), cache.getClass()));
                 final Constructor<Session> fallback = ConstructorUtils.getMatchingAccessibleConstructor(name,
-                        host.getClass());
+                    host.getClass());
                 if(fallback == null) {
                     throw new FactoryException(String.format("No matching constructor for parameter %s", host.getClass()));
                 }
                 session = fallback.newInstance(host);
             }
             else {
-                session = constructor.newInstance(host, trust, key);
+                session = constructor.newInstance(host, trust, key, cache);
             }
             return session;
         }

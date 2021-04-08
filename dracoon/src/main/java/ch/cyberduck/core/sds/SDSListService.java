@@ -101,7 +101,6 @@ public class SDSListService implements ListService {
 
     @Override
     public ListService withCache(final Cache<Path> cache) {
-        nodeid.withCache(cache);
         return this;
     }
 }

@@ -70,6 +70,8 @@ public abstract class Session<C> implements TranscriptListener {
      */
     protected final Host host;
 
+    protected final Cache<Path> cache;
+
     private Metrics metrics = new DisabledMetrics();
 
     /**
@@ -125,8 +127,9 @@ public abstract class Session<C> implements TranscriptListener {
         closed
     }
 
-    protected Session(final Host h) {
+    protected Session(final Host h, final Cache<Path> cache) {
         this.host = h;
+        this.cache = cache;
     }
 
     /**
@@ -134,6 +137,10 @@ public abstract class Session<C> implements TranscriptListener {
      */
     public C getClient() {
         return client;
+    }
+
+    public Cache<Path> getCache() {
+        return cache;
     }
 
     public void enableMetrics() {

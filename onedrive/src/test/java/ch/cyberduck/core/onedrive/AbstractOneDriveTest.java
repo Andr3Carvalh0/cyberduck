@@ -56,7 +56,7 @@ public abstract class AbstractOneDriveTest extends AbstractGraphTest {
 
     @Override
     protected GraphSession session(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        return (session = new OneDriveSession(host, trust, key));
+        return (session = new OneDriveSession(host, trust, key, cache));
     }
 
     public final static class TestPasswordStore extends DisabledPasswordStore {

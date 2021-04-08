@@ -16,6 +16,7 @@ package ch.cyberduck.core.gmxcloud;
  */
 
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.SessionFactory;
 import ch.cyberduck.core.ssl.DefaultX509KeyManager;
 import ch.cyberduck.core.ssl.DefaultX509TrustManager;
@@ -29,7 +30,7 @@ public class SessionFactoryTest {
     @Test
     public void testCreateSession() {
         assertNotNull(SessionFactory.create(new Host(new GmxcloudProtocol()),
-            new DefaultX509TrustManager(), new DefaultX509KeyManager()
+            new DefaultX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty()
         ));
     }
 }

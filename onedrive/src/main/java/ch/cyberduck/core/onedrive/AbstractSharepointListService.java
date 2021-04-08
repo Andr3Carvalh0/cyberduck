@@ -81,7 +81,6 @@ public abstract class AbstractSharepointListService implements ListService {
 
     @Override
     public ListService withCache(final Cache<Path> cache) {
-        idProvider.withCache(cache);
         return this;
     }
 

@@ -43,7 +43,7 @@ public class B2AttributesFinderFeatureTest extends AbstractB2Test {
         final Path file = new Path(bucket, UUID.randomUUID().toString(), EnumSet.of(Path.Type.file));
         final B2FileidProvider fileid = new B2FileidProvider(session);
         final B2StartLargeFileResponse startResponse = session.getClient().startLargeFileUpload(
-            fileid.withCache(cache).getFileid(bucket, new DisabledListProgressListener()),
+            fileid.getFileid(bucket, new DisabledListProgressListener()),
             file.getName(), null, Collections.emptyMap());
         assertSame(PathAttributes.EMPTY, new B2AttributesFinderFeature(session, fileid).find(file));
         final Path found = new B2ObjectListService(session, fileid).list(bucket, new DisabledListProgressListener()).find(

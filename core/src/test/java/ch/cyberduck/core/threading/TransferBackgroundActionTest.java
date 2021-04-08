@@ -25,6 +25,7 @@ import ch.cyberduck.core.NullLocal;
 import ch.cyberduck.core.NullSession;
 import ch.cyberduck.core.NullTransferSession;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Session;
 import ch.cyberduck.core.TestLoginConnectionService;
 import ch.cyberduck.core.TestProtocol;
@@ -221,7 +222,7 @@ public class TransferBackgroundActionTest {
         final TransferOptions options = new TransferOptions();
         final TransferBackgroundAction action = new TransferBackgroundAction(controller, new DefaultSessionPool(
             new TestLoginConnectionService(), new DisabledX509TrustManager(), new DefaultX509KeyManager(),
-            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), host) {
+            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), host, PathCache.empty()) {
             @Override
             public Session<?> borrow(final BackgroundActionState callback) throws BackgroundException {
                 throw new ConnectionRefusedException("d", new SocketException());

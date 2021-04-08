@@ -18,12 +18,15 @@ package ch.cyberduck.core.irods;
  */
 
 import ch.cyberduck.core.BookmarkNameProvider;
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Credentials;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LocaleFactory;
 import ch.cyberduck.core.LoginCallback;
+import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.URIEncoder;
 import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.exception.LoginFailureException;
@@ -65,14 +68,15 @@ public class IRODSSession extends SSLSession<IRODSFileSystemAO> {
     private static final Logger log = Logger.getLogger(IRODSSession.class);
 
     private final Preferences preferences
-            = PreferencesFactory.get();
+        = PreferencesFactory.get();
 
     public IRODSSession(final Host h) {
-        super(h, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        super(h, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
     }
 
-    public IRODSSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h, trust, key);
+    public IRODSSession(final Host h, final X509TrustManager trust,
+                        final X509KeyManager key, final Cache<Path> cache) {
+        super(h, trust, key, cache);
     }
 
     @Override
@@ -139,7 +143,7 @@ public class IRODSSession extends SSLSession<IRODSFileSystemAO> {
             }
             if(!response.isSuccessful()) {
                 throw new LoginFailureException(MessageFormat.format(LocaleFactory.localizedString(
-                        "Login {0} with username and password", "Credentials"), BookmarkNameProvider.toString(host)));
+                    "Login {0} with username and password", "Credentials"), BookmarkNameProvider.toString(host)));
             }
         }
         catch(JargonException e) {
@@ -203,12 +207,12 @@ public class IRODSSession extends SSLSession<IRODSFileSystemAO> {
         public URI toURI(final boolean includePassword) throws JargonException {
             try {
                 return new URI(String.format("irods://%s.%s%s@%s:%d%s",
-                        this.getUserName(),
-                        this.getZone(),
-                        includePassword ? String.format(":%s", this.getPassword()) : StringUtils.EMPTY,
-                        this.getHost(),
-                        this.getPort(),
-                        URIEncoder.encode(this.getHomeDirectory())));
+                    this.getUserName(),
+                    this.getZone(),
+                    includePassword ? String.format(":%s", this.getPassword()) : StringUtils.EMPTY,
+                    this.getHost(),
+                    this.getPort(),
+                    URIEncoder.encode(this.getHomeDirectory())));
             }
             catch(URISyntaxException e) {
                 throw new JargonException(e.getMessage());

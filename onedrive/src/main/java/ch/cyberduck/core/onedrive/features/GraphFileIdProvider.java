@@ -16,11 +16,9 @@ package ch.cyberduck.core.onedrive.features;
  */
 
 import ch.cyberduck.core.AttributedList;
-import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.ListProgressListener;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.Path;
-import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.SimplePathPredicate;
 import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.exception.NotfoundException;
@@ -32,7 +30,6 @@ import org.apache.commons.lang3.StringUtils;
 public class GraphFileIdProvider implements IdProvider {
 
     private final GraphSession session;
-    private Cache<Path> cache = PathCache.empty();
 
     public GraphFileIdProvider(final GraphSession session) {
         this.session = session;
@@ -43,12 +40,12 @@ public class GraphFileIdProvider implements IdProvider {
         if(StringUtils.isNotBlank(file.attributes().getFileId())) {
             return file.attributes().getFileId();
         }
-        if(cache.isCached(file.getParent())) {
-            final AttributedList<Path> list = cache.get(file.getParent());
+        if(session.getCache().isCached(file.getParent())) {
+            final AttributedList<Path> list = session.getCache().get(file.getParent());
             final Path found = list.find(new SimplePathPredicate(file));
             if(null != found) {
-                if(StringUtils.isNotBlank(file.attributes().getFileId())) {
-                    return this.set(file, file.attributes().getFileId());
+                if(StringUtils.isNotBlank(found.attributes().getFileId())) {
+                    return this.set(file, found.attributes().getFileId());
                 }
             }
         }
@@ -63,11 +60,5 @@ public class GraphFileIdProvider implements IdProvider {
     protected String set(final Path file, final String id) {
         file.attributes().setFileId(id);
         return id;
-    }
-
-    @Override
-    public IdProvider withCache(final Cache<Path> cache) {
-        this.cache = cache;
-        return this;
     }
 }

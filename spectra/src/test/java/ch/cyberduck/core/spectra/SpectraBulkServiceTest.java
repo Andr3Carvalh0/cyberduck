@@ -25,6 +25,7 @@ import ch.cyberduck.core.DisabledProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Scheme;
 import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.exception.NotfoundException;
@@ -65,7 +66,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -98,7 +99,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -135,7 +136,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -161,7 +162,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -188,7 +189,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -237,7 +238,7 @@ public class SpectraBulkServiceTest {
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager());
+            new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService service = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public void warn(final Host bookmark, final String title, final String message, final String continueButton, final String disconnectButton, final String preference) {
@@ -287,7 +288,7 @@ public class SpectraBulkServiceTest {
         }, System.getProperties().getProperty("spectra.hostname"), Integer.valueOf(System.getProperties().getProperty("spectra.port")), new Credentials(
             System.getProperties().getProperty("spectra.user"), System.getProperties().getProperty("spectra.key")
         ));
-        final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
         session.login(Proxy.DIRECT, new DisabledLoginCallback(), new DisabledCancelCallback());
         final Path container = new Path(new Path("cyberduck", EnumSet.of(Path.Type.directory, Path.Type.volume)), "SPECTRA-67", EnumSet.of(Path.Type.directory));

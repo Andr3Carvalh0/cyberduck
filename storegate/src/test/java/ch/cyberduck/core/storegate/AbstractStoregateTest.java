@@ -57,7 +57,7 @@ public class AbstractStoregateTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/Storegate.cyberduckprofile"));
         final Host host = new Host(profile, profile.getDefaultHostname(), new Credentials("cyberduck"));
-        session = new StoregateSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new StoregateSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {

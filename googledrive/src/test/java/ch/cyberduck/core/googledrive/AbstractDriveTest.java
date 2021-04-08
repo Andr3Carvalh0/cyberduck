@@ -67,7 +67,7 @@ public class AbstractDriveTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/Google Drive.cyberduckprofile"));
         final Host host = new Host(profile, profile.getDefaultHostname(), new Credentials("cyberduck"));
-        session = new DriveSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new DriveSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {

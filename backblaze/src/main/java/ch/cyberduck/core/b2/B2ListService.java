@@ -16,7 +16,6 @@ package ch.cyberduck.core.b2;
  */
 
 import ch.cyberduck.core.AttributedList;
-import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.ListProgressListener;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.Path;
@@ -54,13 +53,6 @@ public class B2ListService implements ListService {
      */
     public B2ListService withBucket(final Path bucket) {
         this.bucket = bucket;
-        return this;
-    }
-
-    @Override
-    public ListService withCache(final Cache<Path> cache) {
-        buckets.withCache(cache);
-        objects.withCache(cache);
         return this;
     }
 }

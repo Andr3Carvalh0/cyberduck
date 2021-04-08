@@ -15,6 +15,7 @@ package ch.cyberduck.core.onedrive;/*
 
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.TestProtocol;
 import ch.cyberduck.core.features.Move;
 import ch.cyberduck.core.ssl.DefaultX509KeyManager;
@@ -31,7 +32,8 @@ import static org.junit.Assert.assertEquals;
 public class OfflineGraphMoveFeatureTest {
     @Test
     public void testSharepoint() {
-        final SharepointSession session = new SharepointSession(new Host(new TestProtocol()), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final SharepointSession session = new SharepointSession(new Host(new TestProtocol()), new DisabledX509TrustManager(),
+            new DefaultX509KeyManager(), PathCache.empty());
         final Move move = session.getFeature(Move.class);
         final List<TestCase> cases = new ArrayList<>();
         // cannot rename root
@@ -77,7 +79,8 @@ public class OfflineGraphMoveFeatureTest {
 
     @Test
     public void testOneDrive() {
-        final OneDriveSession session = new OneDriveSession(new Host(new TestProtocol()), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final OneDriveSession session = new OneDriveSession(new Host(new TestProtocol()), new DisabledX509TrustManager(),
+            new DefaultX509KeyManager(), PathCache.empty());
         final Move move = session.getFeature(Move.class);
         final List<TestCase> cases = new ArrayList<>();
         // cannot rename root

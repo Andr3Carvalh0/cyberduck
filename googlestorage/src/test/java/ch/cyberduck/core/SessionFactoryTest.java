@@ -31,7 +31,7 @@ public class SessionFactoryTest {
     @Test
     public void testCreateSession() {
         assertNotNull(SessionFactory.create(new Host(new GoogleStorageProtocol()),
-                new DefaultX509TrustManager(), new DefaultX509KeyManager()
+            new DefaultX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty()
         ));
     }
 }

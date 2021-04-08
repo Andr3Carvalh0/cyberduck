@@ -18,7 +18,9 @@ package ch.cyberduck.core.ssl;
  *  dkocher@cyberduck.ch
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.Session;
 
 public abstract class SSLSession<C> extends Session<C> {
@@ -26,8 +28,8 @@ public abstract class SSLSession<C> extends Session<C> {
     protected X509TrustManager trust;
     protected X509KeyManager key;
 
-    protected SSLSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h);
+    protected SSLSession(final Host h, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(h, cache);
         this.trust = trust;
         this.key = key;
     }

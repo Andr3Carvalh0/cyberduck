@@ -97,7 +97,6 @@ public class B2AttributesFinderFeature implements AttributesFinder {
 
     @Override
     public AttributesFinder withCache(final Cache<Path> cache) {
-        fileid.withCache(cache);
         return this;
     }
 }

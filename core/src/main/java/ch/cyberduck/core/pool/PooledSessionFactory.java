@@ -17,9 +17,11 @@ package ch.cyberduck.core.pool;
  * Bug fixes, suggestions and comments should be sent to feedback@cyberduck.ch
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.ConnectionService;
 import ch.cyberduck.core.DisabledCancelCallback;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.Session;
 import ch.cyberduck.core.SessionFactory;
 import ch.cyberduck.core.exception.BackgroundException;
@@ -40,14 +42,16 @@ public class PooledSessionFactory extends BasePooledObjectFactory<Session> {
     private final X509KeyManager key;
     private final Host bookmark;
     private final VaultRegistry registry;
+    private final Cache<Path> cache;
 
     public PooledSessionFactory(final ConnectionService connect, final X509TrustManager trust, final X509KeyManager key,
-                                final Host bookmark, final VaultRegistry registry) {
+                                final Host bookmark, final VaultRegistry registry, final Cache<Path> cache) {
         this.connect = connect;
         this.trust = trust;
         this.key = key;
         this.bookmark = bookmark;
         this.registry = registry;
+        this.cache = cache;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class PooledSessionFactory extends BasePooledObjectFactory<Session> {
         if(log.isDebugEnabled()) {
             log.debug(String.format("Create new session for host %s in pool", bookmark));
         }
-        return SessionFactory.create(bookmark, trust, key).withRegistry(registry);
+        return SessionFactory.create(bookmark, trust, key, cache).withRegistry(registry);
     }
 
     @Override

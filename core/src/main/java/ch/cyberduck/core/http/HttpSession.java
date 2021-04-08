@@ -19,7 +19,9 @@ package ch.cyberduck.core.http;
  * dkocher@cyberduck.ch
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.proxy.ProxyFactory;
 import ch.cyberduck.core.ssl.SSLSession;
 import ch.cyberduck.core.ssl.ThreadLocalHostnameDelegatingTrustManager;
@@ -30,8 +32,8 @@ public abstract class HttpSession<C> extends SSLSession<C> {
 
     protected HttpConnectionPoolBuilder builder;
 
-    protected HttpSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    protected HttpSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
         this.builder = new HttpConnectionPoolBuilder(host,
             trust instanceof ThreadLocalHostnameDelegatingTrustManager ? (ThreadLocalHostnameDelegatingTrustManager) trust :
                 new ThreadLocalHostnameDelegatingTrustManager(trust, host.getHostname()), key, ProxyFactory.get());

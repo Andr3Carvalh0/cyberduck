@@ -15,6 +15,7 @@ package ch.cyberduck.core.b2;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
@@ -49,8 +50,9 @@ public class B2Session extends HttpSession<B2ApiClient> {
     private final B2FileidProvider fileid = new B2FileidProvider(this);
     private final B2ListService listService = new B2ListService(this, fileid);
 
-    public B2Session(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public B2Session(final Host host, final X509TrustManager trust,
+                     final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

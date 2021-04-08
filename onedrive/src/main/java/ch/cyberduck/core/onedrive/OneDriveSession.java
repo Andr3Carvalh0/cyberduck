@@ -15,6 +15,7 @@ package ch.cyberduck.core.onedrive;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.ListService;
@@ -32,16 +33,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.nuxeo.onedrive.client.types.Drive;
 import org.nuxeo.onedrive.client.types.DriveItem;
 
-import javax.swing.text.html.Option;
-import java.util.Collections;
-
 public class OneDriveSession extends GraphSession {
 
     public final static ContainerItem MYFILES = new ContainerItem(OneDriveListService.MYFILES_NAME, null, true);
     public final static ContainerItem SHAREDFILES = new ContainerItem(null, OneDriveListService.SHARED_NAME, false);
 
-    public OneDriveSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public OneDriveSession(final Host host, final X509TrustManager trust,
+                           final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     /**

@@ -26,6 +26,7 @@ import ch.cyberduck.core.DisabledProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Local;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Scheme;
 import ch.cyberduck.core.TestProtocol;
 import ch.cyberduck.core.exception.BackgroundException;
@@ -98,7 +99,7 @@ public class SingleTransferWorkerTest {
         ));
         final AtomicBoolean failed = new AtomicBoolean();
         final SpectraSession session = new SpectraSession(host, new DisabledX509TrustManager(),
-            new DefaultX509KeyManager()) {
+            new DefaultX509KeyManager(), PathCache.empty()) {
             final SpectraWriteFeature write = new SpectraWriteFeature(this) {
                 @Override
                 public HttpResponseOutputStream<StorageObject> write(final Path file, final TransferStatus status, final ConnectionCallback callback) throws BackgroundException {

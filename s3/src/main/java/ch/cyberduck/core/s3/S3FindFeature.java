@@ -17,7 +17,6 @@ package ch.cyberduck.core.s3;
  * Bug fixes, suggestions and comments should be sent to feedback@cyberduck.ch
  */
 
-import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Path;
 import ch.cyberduck.core.PathContainerService;
@@ -77,11 +76,5 @@ public class S3FindFeature implements Find {
             // Object is inaccessible to current user, but does exist.
             return true;
         }
-    }
-
-    @Override
-    public Find withCache(final Cache<Path> cache) {
-        attributes.withCache(cache);
-        return this;
     }
 }

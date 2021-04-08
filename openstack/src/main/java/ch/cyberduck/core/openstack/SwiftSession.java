@@ -18,6 +18,7 @@ package ch.cyberduck.core.openstack;
  * feedback@cyberduck.ch
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
@@ -65,8 +66,8 @@ public class SwiftSession extends HttpSession<Client> {
     private Map<Path, Distribution> distributions = Collections.emptyMap();
 
 
-    public SwiftSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public SwiftSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

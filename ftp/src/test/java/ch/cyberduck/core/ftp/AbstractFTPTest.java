@@ -80,7 +80,7 @@ public class AbstractFTPTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/FTP.cyberduckprofile"));
         final Host host = new Host(profile, "localhost", PORT_NUMBER, new Credentials("test", "test"));
-        session = new FTPSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager()) {
+        session = new FTPSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache) {
             @Override
             public <T> T _getFeature(final Class<T> type) {
                 final T f = AbstractFTPTest.this.getFeature(type);

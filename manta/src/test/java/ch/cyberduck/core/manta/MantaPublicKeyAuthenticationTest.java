@@ -22,6 +22,7 @@ import ch.cyberduck.core.DisabledLoginCallback;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Local;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.exception.LoginCanceledException;
 import ch.cyberduck.core.local.DefaultLocalTouchFeature;
 import ch.cyberduck.core.proxy.Proxy;
@@ -63,7 +64,7 @@ public class MantaPublicKeyAuthenticationTest {
             );
             final String hostname = new URL(System.getProperty("manta.url")).getHost();
             final Host host = new Host(new MantaProtocol(), hostname, credentials);
-            final MantaSession session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+            final MantaSession session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
             session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
             session.login(Proxy.DIRECT,
                 new DisabledLoginCallback() {
@@ -105,7 +106,7 @@ public class MantaPublicKeyAuthenticationTest {
             );
             final String hostname = new URL(System.getProperty("manta.url")).getHost();
             final Host host = new Host(new MantaProtocol(), hostname, credentials);
-            final MantaSession session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+            final MantaSession session = new MantaSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
             session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
             session.login(Proxy.DIRECT,
                 new DisabledLoginCallback() {

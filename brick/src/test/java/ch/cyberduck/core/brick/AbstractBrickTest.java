@@ -24,6 +24,7 @@ import ch.cyberduck.core.DisabledProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.serializer.impl.dd.ProfilePlistReader;
@@ -55,7 +56,7 @@ public class AbstractBrickTest {
         final Host host = new Host(profile, "mountainduck.brickftp.com", new Credentials(
             System.getProperties().getProperty("brick.user"), System.getProperties().getProperty("brick.password")
         ));
-        session = new BrickSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new BrickSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {

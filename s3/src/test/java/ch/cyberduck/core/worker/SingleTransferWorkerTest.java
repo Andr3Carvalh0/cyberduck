@@ -130,7 +130,7 @@ public class SingleTransferWorkerTest extends AbstractS3Test {
             System.getProperties().getProperty("s3.key"), System.getProperties().getProperty("s3.secret")
         ));
         final AtomicBoolean failed = new AtomicBoolean();
-        final S3Session session = new S3Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager()) {
+        final S3Session session = new S3Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty()) {
             @Override
             @SuppressWarnings("unchecked")
             public <T> T _getFeature(final Class<T> type) {

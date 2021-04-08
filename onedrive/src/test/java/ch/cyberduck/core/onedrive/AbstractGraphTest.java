@@ -24,6 +24,7 @@ import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostPasswordStore;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.Protocol;
 import ch.cyberduck.core.ProtocolFactory;
@@ -43,6 +44,8 @@ import java.util.HashSet;
 import static org.junit.Assert.fail;
 
 public abstract class AbstractGraphTest {
+
+    protected final PathCache cache = new PathCache(100);
     private GraphSession session;
 
     @After

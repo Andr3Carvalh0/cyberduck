@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 
 public class AbstractDropboxTest {
 
+    protected final PathCache cache = new PathCache(100);
     protected DropboxSession session;
 
     @Parameterized.Parameters(name = "vaultVersion = {0}")
@@ -54,7 +55,7 @@ public class AbstractDropboxTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/Dropbox.cyberduckprofile"));
         final Host host = new Host(profile, profile.getDefaultHostname(), new Credentials("cyberduck"));
-        session = new DropboxSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new DropboxSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String username, final String title, final String reason, final LoginOptions options) {

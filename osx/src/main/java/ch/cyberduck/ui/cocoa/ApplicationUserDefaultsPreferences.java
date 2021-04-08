@@ -18,12 +18,9 @@ package ch.cyberduck.ui.cocoa;
  *  feedback@cyberduck.io
  */
 
-import ch.cyberduck.core.Factory;
 import ch.cyberduck.core.bonjour.RendezvousResponder;
 import ch.cyberduck.core.cryptomator.CryptoVault;
 import ch.cyberduck.core.cryptomator.random.FastSecureRandomProvider;
-import ch.cyberduck.core.logging.SystemLogAppender;
-import ch.cyberduck.core.logging.UnifiedSystemLogAppender;
 import ch.cyberduck.core.preferences.ApplicationPreferences;
 import ch.cyberduck.core.sparkle.SparklePeriodicUpdateChecker;
 import ch.cyberduck.core.threading.DispatchThreadPool;
@@ -40,9 +37,7 @@ import ch.cyberduck.ui.cocoa.controller.DownloadPromptController;
 import ch.cyberduck.ui.cocoa.controller.SyncPromptController;
 import ch.cyberduck.ui.cocoa.controller.UploadPromptController;
 
-import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 public class ApplicationUserDefaultsPreferences extends ApplicationPreferences {
 
@@ -108,15 +103,5 @@ public class ApplicationUserDefaultsPreferences extends ApplicationPreferences {
         super.configureLogging(level);
         // Send log output to system.log
         Logger root = Logger.getRootLogger();
-        final Appender appender;
-        if(Factory.Platform.osversion.matches("10\\.(8|9|10|11).*")) {
-            appender = new SystemLogAppender();
-        }
-        else {
-            // macOS 10.12+
-            appender = new UnifiedSystemLogAppender();
-        }
-        appender.setLayout(new PatternLayout("[%t] %-5p %c - %m%n"));
-        root.addAppender(appender);
     }
 }

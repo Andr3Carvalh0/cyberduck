@@ -93,9 +93,9 @@ public class ConcurrentTransferWorkerTest extends AbstractFTPTest {
             }
         }, new DisabledHostKeyCallback(), new DisabledPasswordStore(), new DisabledProgressListener());
         final DefaultSessionPool pool = new DefaultSessionPool(connect,
-            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), session.getHost(),
+            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), session.getHost(), PathCache.empty(),
             new GenericObjectPool<Session>(new PooledSessionFactory(connect, new DisabledX509TrustManager(), new DefaultX509KeyManager(),
-                session.getHost(), new DefaultVaultRegistry(new DisabledPasswordCallback())) {
+                session.getHost(), new DefaultVaultRegistry(new DisabledPasswordCallback()), PathCache.empty()) {
                 @Override
                 public Session create() {
                     return new FTPSession(session.getHost()) {
@@ -180,7 +180,7 @@ public class ConcurrentTransferWorkerTest extends AbstractFTPTest {
             }, new DisabledHostKeyCallback(), new DisabledPasswordStore(),
                 new DisabledProgressListener()),
             new DisabledX509TrustManager(), new DefaultX509KeyManager(),
-            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), session.getHost());
+            new DefaultVaultRegistry(new DisabledPasswordCallback()), new DisabledTranscriptListener(), session.getHost(), cache);
         final ConcurrentTransferWorker worker = new ConcurrentTransferWorker(
             pool.withMaxTotal(connections), SessionPool.DISCONNECTED,
             transfer, new TransferOptions(), new TransferSpeedometer(transfer), new DisabledTransferPrompt() {

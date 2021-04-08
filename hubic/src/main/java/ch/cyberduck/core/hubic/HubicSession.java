@@ -15,11 +15,13 @@ package ch.cyberduck.core.hubic;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.LoginCallback;
 import ch.cyberduck.core.OAuthTokens;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.cdn.DistributionConfiguration;
 import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.oauth.OAuth2ErrorResponseInterceptor;
@@ -44,8 +46,9 @@ public class HubicSession extends SwiftSession {
 
     private OAuth2RequestInterceptor authorizationService;
 
-    public HubicSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public HubicSession(final Host host, final X509TrustManager trust,
+                        final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

@@ -15,6 +15,7 @@ package ch.cyberduck.core.onedrive;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
@@ -68,8 +69,8 @@ public abstract class GraphSession extends HttpSession<OneDriveAPI> {
 
     protected final GraphFileIdProvider fileIdProvider = new GraphFileIdProvider(this);
 
-    protected GraphSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    protected GraphSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     public DriveItem toItem(final Path currentPath) throws BackgroundException {

@@ -251,7 +251,6 @@ public class SDSAttributesFinderFeature implements AttributesFinder {
 
     @Override
     public AttributesFinder withCache(final Cache<Path> cache) {
-        nodeid.withCache(cache);
         return this;
     }
 }

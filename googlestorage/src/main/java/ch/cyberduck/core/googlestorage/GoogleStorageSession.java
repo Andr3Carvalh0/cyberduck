@@ -15,11 +15,13 @@ package ch.cyberduck.core.googlestorage;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LoginCallback;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.PreferencesUseragentProvider;
 import ch.cyberduck.core.UrlProvider;
 import ch.cyberduck.core.UseragentProvider;
@@ -50,8 +52,9 @@ public class GoogleStorageSession extends HttpSession<Storage> {
     private ApacheHttpTransport transport;
     private OAuth2RequestInterceptor authorizationService;
 
-    public GoogleStorageSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public GoogleStorageSession(final Host host, final X509TrustManager trust,
+                                final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

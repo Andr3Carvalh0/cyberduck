@@ -15,7 +15,9 @@ package ch.cyberduck.core.nextcloud;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.UrlProvider;
 import ch.cyberduck.core.dav.DAVSession;
 import ch.cyberduck.core.features.Lock;
@@ -26,8 +28,9 @@ import ch.cyberduck.core.ssl.X509TrustManager;
 
 public class NextcloudSession extends DAVSession {
 
-    public NextcloudSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public NextcloudSession(final Host host, final X509TrustManager trust,
+                            final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

@@ -15,11 +15,15 @@ package ch.cyberduck.core.threading;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Controller;
+import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.ProgressListener;
 import ch.cyberduck.core.SessionPoolFactory;
 import ch.cyberduck.core.TransferPromptControllerFactory;
 import ch.cyberduck.core.pool.SessionPool;
+import ch.cyberduck.core.preferences.PreferencesFactory;
 import ch.cyberduck.core.transfer.Transfer;
 import ch.cyberduck.core.transfer.TransferAdapter;
 import ch.cyberduck.core.transfer.TransferCallback;
@@ -33,14 +37,15 @@ public class BrowserTransferBackgroundAction extends TransferBackgroundAction {
 
     public BrowserTransferBackgroundAction(final Controller controller, final SessionPool pool,
                                            final Transfer transfer, final TransferCallback callback) {
-        this(controller, pool, transfer, callback, TransferPromptControllerFactory.get(controller, transfer, pool, SessionPool.DISCONNECTED));
+        this(controller, pool, new PathCache(PreferencesFactory.get().getInteger("transfer.cache.size")),
+            transfer, callback, TransferPromptControllerFactory.get(controller, transfer, pool, SessionPool.DISCONNECTED));
     }
 
-    public BrowserTransferBackgroundAction(final Controller controller, final SessionPool pool,
+    public BrowserTransferBackgroundAction(final Controller controller, final SessionPool pool, final Cache<Path> cache,
                                            final Transfer transfer, final TransferCallback callback, final TransferPrompt prompt) {
         super(controller,
             pool,
-            transfer.getType() == Transfer.Type.copy ? SessionPoolFactory.create(controller, transfer.getDestination()) : SessionPool.DISCONNECTED,
+            transfer.getType() == Transfer.Type.copy ? SessionPoolFactory.create(controller, transfer.getDestination(), cache) : SessionPool.DISCONNECTED,
             new BrowserTransferAdapter(controller), controller, transfer, new TransferOptions(), prompt);
         this.transfer = transfer;
         this.callback = callback;

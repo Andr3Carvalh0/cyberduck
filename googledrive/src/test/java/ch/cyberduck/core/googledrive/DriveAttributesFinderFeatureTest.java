@@ -44,26 +44,26 @@ public class DriveAttributesFinderFeatureTest extends AbstractDriveTest {
 
     @Test(expected = NotfoundException.class)
     public void testNotFound() throws Exception {
-        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session).withCache(cache));
+        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session));
         f.find(new Path(DriveHomeFinderService.MYDRIVE_FOLDER, UUID.randomUUID().toString(), EnumSet.of(Path.Type.file)));
     }
 
     @Test
     public void testFindRoot() throws Exception {
-        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session).withCache(cache));
+        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session));
         assertEquals(PathAttributes.EMPTY, f.find(new Path("/", EnumSet.of(Path.Type.volume, Path.Type.directory))));
     }
 
     @Test
     public void testFindMyDrive() throws Exception {
-        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session).withCache(cache));
+        final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, new DriveFileidProvider(session));
         assertEquals(PathAttributes.EMPTY, f.find(DriveHomeFinderService.MYDRIVE_FOLDER));
     }
 
     @Test
     public void testFind() throws Exception {
         final Path test = new Path(DriveHomeFinderService.MYDRIVE_FOLDER, UUID.randomUUID().toString() + ".txt", EnumSet.of(Path.Type.file));
-        final DriveFileidProvider fileid = new DriveFileidProvider(session).withCache(cache);
+        final DriveFileidProvider fileid = new DriveFileidProvider(session);
         new DriveTouchFeature(session, fileid).touch(test, new TransferStatus());
         final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, fileid);
         final PathAttributes attributes = f.find(test);
@@ -76,7 +76,7 @@ public class DriveAttributesFinderFeatureTest extends AbstractDriveTest {
     @Test
     public void testFindDirectory() throws Exception {
         final Path file = new Path(DriveHomeFinderService.MYDRIVE_FOLDER, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.directory));
-        final DriveFileidProvider fileid = new DriveFileidProvider(session).withCache(cache);
+        final DriveFileidProvider fileid = new DriveFileidProvider(session);
         new DriveDirectoryFeature(session, fileid).mkdir(file, null, new TransferStatus());
         final PathAttributes attributes = new DriveAttributesFinderFeature(session, fileid).find(file);
         assertNotNull(attributes);
@@ -90,7 +90,7 @@ public class DriveAttributesFinderFeatureTest extends AbstractDriveTest {
     @Test
     public void testMissingShortcutTarget() throws Exception {
         final Path test = new Path(DriveHomeFinderService.MYDRIVE_FOLDER, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file));
-        final DriveFileidProvider fileid = new DriveFileidProvider(session).withCache(cache);
+        final DriveFileidProvider fileid = new DriveFileidProvider(session);
         new DriveTouchFeature(session, fileid).touch(test, new TransferStatus());
         final DriveAttributesFinderFeature f = new DriveAttributesFinderFeature(session, fileid);
         final PathAttributes attributes = f.find(test);

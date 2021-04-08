@@ -27,6 +27,7 @@ import ch.cyberduck.core.LoginCallback;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.PasswordStoreFactory;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.PathContainerService;
 import ch.cyberduck.core.PathNormalizer;
 import ch.cyberduck.core.WebUrlProvider;
@@ -63,7 +64,7 @@ public class CustomOriginCloudFrontDistributionConfiguration extends CloudFrontD
                                                            final X509KeyManager key) {
         // Configure with the same host as S3 to get the same credentials from the keychain.
         super(new S3Session(new Host(new S3Protocol(),
-            new S3Protocol().getDefaultHostname(), origin.getCdnCredentials()), trust, key), trust, key, Collections.emptyMap());
+            new S3Protocol().getDefaultHostname(), origin.getCdnCredentials()), trust, key, PathCache.empty()), trust, key, Collections.emptyMap());
         this.origin = origin;
     }
 

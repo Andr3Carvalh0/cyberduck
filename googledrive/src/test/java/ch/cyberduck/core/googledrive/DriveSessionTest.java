@@ -52,7 +52,7 @@ public class DriveSessionTest extends AbstractDriveTest {
     @Test
     public void testFeatures() {
         final Host host = new Host(new DriveProtocol(), "test.cyberduck.ch");
-        final Session session = new DriveSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final Session session = new DriveSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), cache);
         assertNotNull(session.getFeature(Directory.class));
         assertNotNull(session.getFeature(Delete.class));
         assertNotNull(session.getFeature(Touch.class));
@@ -64,7 +64,7 @@ public class DriveSessionTest extends AbstractDriveTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/Google Drive.cyberduckprofile"));
         final Host host = new Host(profile, "www.googleapis.com", new Credentials());
-        final DriveSession session = new DriveSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        final DriveSession session = new DriveSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String username, final String title, final String reason, final LoginOptions options) throws LoginCanceledException {

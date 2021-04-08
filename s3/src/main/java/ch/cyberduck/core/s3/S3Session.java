@@ -20,6 +20,7 @@ package ch.cyberduck.core.s3;
  */
 
 import ch.cyberduck.core.AttributedList;
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Credentials;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Host;
@@ -28,6 +29,7 @@ import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LoginCallback;
 import ch.cyberduck.core.PasswordCallback;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Scheme;
 import ch.cyberduck.core.UrlProvider;
 import ch.cyberduck.core.auth.AWSSessionCredentialsRetriever;
@@ -86,11 +88,11 @@ public class S3Session extends HttpSession<RequestEntityRestStorageService> {
         = S3Protocol.AuthenticationHeaderSignatureVersion.getDefault(host.getProtocol());
 
     public S3Session(final Host host) {
-        super(host, new S3BucketHostnameTrustManager(new DisabledX509TrustManager(), host.getHostname()), new DefaultX509KeyManager());
+        super(host, new S3BucketHostnameTrustManager(new DisabledX509TrustManager(), host.getHostname()), new DefaultX509KeyManager(), PathCache.empty());
     }
 
-    public S3Session(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, new S3BucketHostnameTrustManager(trust, host.getHostname()), key);
+    public S3Session(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, new S3BucketHostnameTrustManager(trust, host.getHostname()), key, cache);
     }
 
     @Override

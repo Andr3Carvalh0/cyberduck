@@ -154,7 +154,6 @@ public abstract class AbstractDriveListService implements ListService {
 
     @Override
     public ListService withCache(final Cache<Path> cache) {
-        fileid.withCache(cache);
         return this;
     }
 }

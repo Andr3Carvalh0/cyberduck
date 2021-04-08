@@ -86,8 +86,8 @@ public class SingleTransferWorkerTest extends AbstractB2Test {
                 System.getProperties().getProperty("b2.user"), System.getProperties().getProperty("b2.key")
             ));
         final AtomicBoolean failed = new AtomicBoolean();
-        final B2Session session = new B2Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager()) {
-            final B2LargeUploadService upload = new B2LargeUploadService(this, new B2FileidProvider(this).withCache(cache), new B2WriteFeature(this, new B2FileidProvider(this).withCache(cache)),
+        final B2Session session = new B2Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache) {
+            final B2LargeUploadService upload = new B2LargeUploadService(this, new B2FileidProvider(this), new B2WriteFeature(this, new B2FileidProvider(this)),
                 PreferencesFactory.get().getLong("b2.upload.largeobject.size"),
                 PreferencesFactory.get().getInteger("b2.upload.largeobject.concurrency")) {
                 @Override
@@ -134,7 +134,7 @@ public class SingleTransferWorkerTest extends AbstractB2Test {
 
         }.run(session));
         local.delete();
-        final B2FileidProvider fileid = new B2FileidProvider(session).withCache(cache);
+        final B2FileidProvider fileid = new B2FileidProvider(session);
         assertEquals(content.length, new B2AttributesFinderFeature(session, fileid).find(test).getSize());
         assertEquals(content.length, counter.getSent(), 0L);
         assertTrue(failed.get());

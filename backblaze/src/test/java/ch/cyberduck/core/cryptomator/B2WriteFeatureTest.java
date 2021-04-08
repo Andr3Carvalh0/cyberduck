@@ -75,7 +75,7 @@ public class B2WriteFeatureTest extends AbstractB2Test {
         final Path vault = cryptomator.create(session, null, new VaultCredentials("test"), new DisabledPasswordStore(), vaultVersion);
         final Path test = new Path(vault, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file));
         session.withRegistry(new DefaultVaultRegistry(new DisabledPasswordStore(), new DisabledPasswordCallback(), cryptomator));
-        final B2FileidProvider fileid = new B2FileidProvider(session).withCache(cache);
+        final B2FileidProvider fileid = new B2FileidProvider(session);
         final CryptoWriteFeature<BaseB2Response> writer = new CryptoWriteFeature<BaseB2Response>(session, new B2WriteFeature(session, fileid), cryptomator);
         final FileHeader header = cryptomator.getFileHeaderCryptor().create();
         status.setHeader(cryptomator.getFileHeaderCryptor().encryptHeader(header));

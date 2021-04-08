@@ -20,6 +20,7 @@ package ch.cyberduck.core.dav;
  */
 
 import ch.cyberduck.core.AttributedList;
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.ConnectionCallback;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Host;
@@ -97,12 +98,13 @@ public class DAVSession extends HttpSession<DAVClient> {
     private AttributesFinder attributes = new DAVAttributesFinderFeature(this);
     private Find find = new DAVFindFeature(this);
 
-    public DAVSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public DAVSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
-    public DAVSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final RedirectCallback redirect) {
-        super(host, trust, key);
+    public DAVSession(final Host host, final X509TrustManager trust, final X509KeyManager key,
+                      final Cache<Path> cache, final RedirectCallback redirect) {
+        super(host, trust, key, cache);
         this.redirect = redirect;
     }
 

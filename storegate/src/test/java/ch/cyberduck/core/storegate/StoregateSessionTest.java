@@ -33,7 +33,7 @@ public class StoregateSessionTest extends AbstractStoregateTest {
     @Test
     public void testFeatures() {
         final Host host = new Host(new StoregateProtocol(), "ws1-stage.storegate.se");
-        final Session session = new StoregateSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        final Session session = new StoregateSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), cache);
         assertNotNull(session.getFeature(ListService.class));
     }
 

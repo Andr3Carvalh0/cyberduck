@@ -15,12 +15,14 @@ package ch.cyberduck.core.nio;
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LocalFactory;
 import ch.cyberduck.core.LoginCallback;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Session;
 import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.exception.LocalAccessDeniedException;
@@ -55,11 +57,12 @@ public class LocalSession extends Session<FileSystem> {
     private Object lock;
 
     public LocalSession(final Host h) {
-        super(h);
+        super(h, PathCache.empty());
     }
 
-    public LocalSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h);
+    public LocalSession(final Host h, final X509TrustManager trust,
+                        final X509KeyManager key, final Cache<Path> cache) {
+        super(h, cache);
     }
 
     public java.nio.file.Path toPath(final Path file) throws LocalAccessDeniedException {

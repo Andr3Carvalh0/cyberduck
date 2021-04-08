@@ -13,7 +13,9 @@ package ch.cyberduck.core.gmxcloud;/*
  * GNU General Public License for more details.
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.dav.DAVSession;
 import ch.cyberduck.core.features.Quota;
 import ch.cyberduck.core.ssl.X509KeyManager;
@@ -24,8 +26,9 @@ import org.apache.log4j.Logger;
 public class GmxcloudSession extends DAVSession {
     private static final Logger log = Logger.getLogger(GmxcloudSession.class);
 
-    public GmxcloudSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public GmxcloudSession(final Host host, final X509TrustManager trust,
+                           final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

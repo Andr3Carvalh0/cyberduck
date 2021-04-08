@@ -17,12 +17,15 @@ package ch.cyberduck.core.ftp;
  * Bug fixes, suggestions and comments should be sent to feedback@cyberduck.ch
  */
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.ConnectionCallback;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LocaleFactory;
 import ch.cyberduck.core.LoginCallback;
+import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Protocol;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.Scheme;
@@ -82,11 +85,12 @@ public class FTPSession extends SSLSession<FTPClient> {
     private Protocol.Case casesensitivity = Protocol.Case.sensitive;
 
     public FTPSession(final Host h) {
-        this(h, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        this(h, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
     }
 
-    public FTPSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h, trust, key);
+    public FTPSession(final Host h, final X509TrustManager trust,
+                      final X509KeyManager key, final Cache<Path> cache) {
+        super(h, trust, key, cache);
     }
 
     @Override

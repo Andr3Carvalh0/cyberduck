@@ -112,7 +112,6 @@ public class SDSEncryptionBulkFeature implements Bulk<Void> {
 
     @Override
     public Bulk<Void> withCache(final Cache<Path> cache) {
-        nodeid.withCache(cache);
         return this;
     }
 }

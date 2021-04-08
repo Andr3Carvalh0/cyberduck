@@ -21,6 +21,7 @@ import ch.cyberduck.core.DisabledHostKeyCallback;
 import ch.cyberduck.core.DisabledLoginCallback;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.Local;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.exception.LoginCanceledException;
@@ -48,7 +49,8 @@ public class HubicSessionTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             new Local("../profiles/hubiC.cyberduckprofile"));
         final HubicSession session = new HubicSession(new Host(profile,
-            new HubicProtocol().getDefaultHostname(), new Credentials("u@domain")), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+            new HubicProtocol().getDefaultHostname(), new Credentials("u@domain")), new DisabledX509TrustManager(),
+            new DefaultX509KeyManager(), PathCache.empty());
         session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
         try {
             session.login(Proxy.DIRECT, new DisabledLoginCallback(), new DisabledCancelCallback());
@@ -66,7 +68,8 @@ public class HubicSessionTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             new Local("../profiles/hubiC.cyberduckprofile"));
         final HubicSession session = new HubicSession(new Host(profile,
-            new HubicProtocol().getDefaultHostname(), new Credentials("u@domain")), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+            new HubicProtocol().getDefaultHostname(), new Credentials("u@domain")), new DisabledX509TrustManager(),
+            new DefaultX509KeyManager(), PathCache.empty());
         session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback());
         session.login(Proxy.DIRECT, new DisabledLoginCallback(), new DisabledCancelCallback());
         session.close();

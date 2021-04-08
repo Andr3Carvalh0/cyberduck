@@ -14,11 +14,13 @@
 
 package ch.cyberduck.core.spectra;
 
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DisabledUrlProvider;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LoginCallback;
+import ch.cyberduck.core.Path;
 import ch.cyberduck.core.UrlProvider;
 import ch.cyberduck.core.cdn.DistributionConfiguration;
 import ch.cyberduck.core.features.*;
@@ -35,8 +37,8 @@ import org.jets3t.service.Jets3tProperties;
 
 public class SpectraSession extends S3Session {
 
-    public SpectraSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public SpectraSession(final Host host, final X509TrustManager trust, final X509KeyManager key, final Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class S3SessionTest extends AbstractS3Test {
                 fail();
                 return null;
             }
-        }, new DefaultX509KeyManager());
+        }, new DefaultX509KeyManager(), PathCache.empty());
         assertNotNull(session.open(Proxy.DIRECT, new DisabledHostKeyCallback(), new DisabledLoginCallback(), new DisabledCancelCallback()));
         assertTrue(session.isConnected());
         session.close();
@@ -283,7 +283,7 @@ public class S3SessionTest extends AbstractS3Test {
                 super.verify(hostname, certs, cipher);
             }
         },
-            new KeychainX509KeyManager(new DisabledCertificateIdentityCallback(), host, new DisabledCertificateStore()));
+            new KeychainX509KeyManager(new DisabledCertificateIdentityCallback(), host, new DisabledCertificateStore()), PathCache.empty());
         final LoginConnectionService c = new LoginConnectionService(
             new DisabledLoginCallback(),
             new DisabledHostKeyCallback(),

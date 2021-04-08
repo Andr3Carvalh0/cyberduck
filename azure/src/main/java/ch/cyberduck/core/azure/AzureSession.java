@@ -19,6 +19,7 @@ package ch.cyberduck.core.azure;
  */
 
 import ch.cyberduck.core.AttributedList;
+import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DisabledHostKeyCallback;
 import ch.cyberduck.core.DisabledListProgressListener;
 import ch.cyberduck.core.Host;
@@ -26,6 +27,7 @@ import ch.cyberduck.core.HostKeyCallback;
 import ch.cyberduck.core.ListService;
 import ch.cyberduck.core.LoginCallback;
 import ch.cyberduck.core.Path;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.PreferencesUseragentProvider;
 import ch.cyberduck.core.Scheme;
 import ch.cyberduck.core.exception.BackgroundException;
@@ -73,11 +75,12 @@ public class AzureSession extends SSLSession<CloudBlobClient> {
     private StorageEvent<SendingRequestEvent> listener;
 
     public AzureSession(final Host h) {
-        super(h, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        super(h, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
     }
 
-    public AzureSession(final Host h, final X509TrustManager trust, final X509KeyManager key) {
-        super(h, trust, key);
+    public AzureSession(final Host h, final X509TrustManager trust,
+                        final X509KeyManager key, final Cache<Path> cache) {
+        super(h, trust, key, cache);
     }
 
     static {

@@ -24,6 +24,7 @@ import ch.cyberduck.core.DisabledProgressListener;
 import ch.cyberduck.core.Host;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.cryptomator.CryptoVault;
@@ -65,7 +66,7 @@ public abstract class AbstractS3Test {
         final Host host = new Host(profile, profile.getDefaultHostname(), new Credentials(
             System.getProperties().getProperty("s3.key"), System.getProperties().getProperty("s3.secret")
         ));
-        session = new S3Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new S3Session(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String username, final String title, final String reason, final LoginOptions options) {

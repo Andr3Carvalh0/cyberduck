@@ -26,6 +26,7 @@ import ch.cyberduck.core.Local;
 import ch.cyberduck.core.LocalFactory;
 import ch.cyberduck.core.LoginConnectionService;
 import ch.cyberduck.core.LoginOptions;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.Profile;
 import ch.cyberduck.core.ProtocolFactory;
 import ch.cyberduck.core.cryptomator.CryptoVault;
@@ -121,7 +122,7 @@ public class AbstractSFTPTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/SFTP.cyberduckprofile"));
         final Host host = new Host(profile, profile.getDefaultHostname(), 2202, new Credentials("test", "test"));
-        session = new SFTPSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager());
+        session = new SFTPSession(host, new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {

@@ -17,6 +17,7 @@ package ch.cyberduck.core.manta;
 
 import ch.cyberduck.core.Credentials;
 import ch.cyberduck.core.Host;
+import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.UrlProvider;
 import ch.cyberduck.core.features.AttributesFinder;
 import ch.cyberduck.core.features.Delete;
@@ -37,7 +38,7 @@ public class MantaSessionTest {
     @Test
     public void testFeatures() {
         final MantaSession session = new MantaSession(new Host(new MantaProtocol(), "username"),
-            new DisabledX509TrustManager(), new DefaultX509KeyManager());
+            new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         assertTrue(session.getFeature(Read.class) instanceof MantaReadFeature);
         assertTrue(session.getFeature(Write.class) instanceof MantaWriteFeature);
         assertTrue(session.getFeature(Directory.class) instanceof MantaDirectoryFeature);
@@ -54,14 +55,14 @@ public class MantaSessionTest {
                 new MantaProtocol(),
                 null,
                 443,
-                new Credentials("theOwner")), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+                new Credentials("theOwner")), new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         assertTrue(ownerSession.userIsOwner());
         final MantaSession subuserSession = new MantaSession(
             new Host(
                 new MantaProtocol(),
                 null,
                 443,
-                new Credentials("theOwner/theSubUser")), new DisabledX509TrustManager(), new DefaultX509KeyManager());
+                new Credentials("theOwner/theSubUser")), new DisabledX509TrustManager(), new DefaultX509KeyManager(), PathCache.empty());
         assertFalse(subuserSession.userIsOwner());
     }
 }

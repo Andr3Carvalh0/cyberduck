@@ -125,8 +125,8 @@ public class SDSSession extends HttpSession<SDSApiClient> {
 
     private final SDSNodeIdProvider nodeid = new SDSNodeIdProvider(this);
 
-    public SDSSession(final Host host, final X509TrustManager trust, final X509KeyManager key) {
-        super(host, trust, key);
+    public SDSSession(final Host host, final X509TrustManager trust, final X509KeyManager key, Cache<Path> cache) {
+        super(host, trust, key, cache);
     }
 
     private static final class OAuthFinderPredicate implements Predicate<Protocol> {

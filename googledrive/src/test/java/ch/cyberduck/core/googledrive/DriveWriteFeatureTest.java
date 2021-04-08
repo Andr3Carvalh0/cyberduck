@@ -50,7 +50,7 @@ public class DriveWriteFeatureTest extends AbstractDriveTest {
     @Test
     public void testWrite() throws Exception {
         final Path test = new Path(DriveHomeFinderService.MYDRIVE_FOLDER, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file));
-        final DriveFileidProvider idProvider = new DriveFileidProvider(session).withCache(cache);
+        final DriveFileidProvider idProvider = new DriveFileidProvider(session);
         String fileid;
         {
             final TransferStatus status = new TransferStatus();
@@ -96,7 +96,7 @@ public class DriveWriteFeatureTest extends AbstractDriveTest {
 
     @Test
     public void testWritePreviuoslyTrashed() throws Exception {
-        final DriveFileidProvider fileid = new DriveFileidProvider(session).withCache(cache);
+        final DriveFileidProvider fileid = new DriveFileidProvider(session);
         final Path test = new DriveTouchFeature(session, fileid).touch(new Path(DriveHomeFinderService.MYDRIVE_FOLDER, new AlphanumericRandomStringService().random(), EnumSet.of(Path.Type.file)), new TransferStatus());
         new DriveDeleteFeature(session, fileid).delete(Collections.singletonList(test), new DisabledPasswordCallback(), new Delete.DisabledCallback());
         assertTrue(new DriveFindFeature(session, fileid).find(test));

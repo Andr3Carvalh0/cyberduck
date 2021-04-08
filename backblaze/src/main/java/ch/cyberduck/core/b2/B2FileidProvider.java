@@ -16,11 +16,9 @@ package ch.cyberduck.core.b2;
  */
 
 import ch.cyberduck.core.AttributedList;
-import ch.cyberduck.core.Cache;
 import ch.cyberduck.core.DefaultIOExceptionMappingService;
 import ch.cyberduck.core.ListProgressListener;
 import ch.cyberduck.core.Path;
-import ch.cyberduck.core.PathCache;
 import ch.cyberduck.core.PathContainerService;
 import ch.cyberduck.core.SimplePathPredicate;
 import ch.cyberduck.core.exception.BackgroundException;
@@ -43,8 +41,6 @@ public class B2FileidProvider implements IdProvider {
 
     private final B2Session session;
 
-    private Cache<Path> cache = PathCache.empty();
-
     public B2FileidProvider(final B2Session session) {
         this.session = session;
     }
@@ -54,8 +50,8 @@ public class B2FileidProvider implements IdProvider {
         if(StringUtils.isNotBlank(file.attributes().getVersionId())) {
             return file.attributes().getVersionId();
         }
-        if(cache.isCached(file.getParent())) {
-            final AttributedList<Path> list = cache.get(file.getParent());
+        if(session.getCache().isCached(file.getParent())) {
+            final AttributedList<Path> list = session.getCache().get(file.getParent());
             final Path found = list.find(new SimplePathPredicate(file));
             if(null != found) {
                 if(StringUtils.isNotBlank(found.attributes().getVersionId())) {
@@ -73,8 +69,8 @@ public class B2FileidProvider implements IdProvider {
                 // Cache in file attributes
                 return this.set(file, info.getBucketId());
             }
-            if(cache.isCached(file.getParent())) {
-                final AttributedList<Path> list = cache.get(file.getParent());
+            if(session.getCache().isCached(file.getParent())) {
+                final AttributedList<Path> list = session.getCache().get(file.getParent());
                 final Path found = list.find(new SimplePathPredicate(file));
                 if(null != found) {
                     if(StringUtils.isNotBlank(found.attributes().getVersionId())) {
@@ -105,11 +101,5 @@ public class B2FileidProvider implements IdProvider {
     protected String set(final Path file, final String id) {
         file.attributes().setVersionId(id);
         return id;
-    }
-
-    @Override
-    public B2FileidProvider withCache(final Cache<Path> cache) {
-        this.cache = cache;
-        return this;
     }
 }

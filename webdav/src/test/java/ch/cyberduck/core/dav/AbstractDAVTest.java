@@ -69,7 +69,7 @@ public class AbstractDAVTest {
         final Profile profile = new ProfilePlistReader(factory).read(
             this.getClass().getResourceAsStream("/DAV.cyberduckprofile"));
         final Host host = new Host(profile, "localhost", PORT_NUMBER, new Credentials("cyberduck"));
-        session = new DAVSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager());
+        session = new DAVSession(host, new DefaultX509TrustManager(), new DefaultX509KeyManager(), cache);
         final LoginConnectionService login = new LoginConnectionService(new DisabledLoginCallback() {
             @Override
             public Credentials prompt(final Host bookmark, final String title, final String reason, final LoginOptions options) {
