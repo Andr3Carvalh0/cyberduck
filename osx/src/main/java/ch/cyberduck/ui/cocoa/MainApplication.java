@@ -123,7 +123,7 @@ public final class MainApplication {
                 log.info(String.format("Native library path:%s", System.getProperty("java.library.path")));
                 log.info(String.format("Using default encoding %s", System.getProperty("file.encoding")));
             }
-            protocols.loadDefaultProfiles();
+            protocols.load();
             final MainController c = new MainController();
 
             // Must implement NSApplicationDelegate protocol
