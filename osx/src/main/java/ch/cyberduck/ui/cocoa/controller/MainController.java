@@ -67,6 +67,8 @@ import ch.cyberduck.core.pool.SessionPool;
 import ch.cyberduck.core.preferences.Preferences;
 import ch.cyberduck.core.preferences.PreferencesFactory;
 import ch.cyberduck.core.preferences.SupportDirectoryFinderFactory;
+import ch.cyberduck.core.profiles.PeriodicProfilesUpdater;
+import ch.cyberduck.core.profiles.ProfilesUpdater;
 import ch.cyberduck.core.resources.IconCacheFactory;
 import ch.cyberduck.core.serializer.HostDictionary;
 import ch.cyberduck.core.threading.AbstractBackgroundAction;
@@ -144,6 +146,9 @@ public class MainController extends BundleController implements NSApplication.De
 
     private final PeriodicUpdateChecker updater
         = PeriodicUpdateCheckerFactory.get(this);
+
+    private final ProfilesUpdater profiles
+        = new PeriodicProfilesUpdater();
 
     private final PathKindDetector detector = new DefaultPathKindDetector();
     /**
@@ -1044,6 +1049,10 @@ public class MainController extends BundleController implements NSApplication.De
                 updater.register();
             }
         }
+        if(preferences.getBoolean("profiles.discovery.updater.enable")) {
+            // Synchronize and register timer
+            profiles.register();
+        }
         // Register OAuth handler
         final String handler = preferences.getProperty("oauth.handler.scheme");
         if(log.isInfoEnabled()) {
@@ -1209,6 +1218,7 @@ public class MainController extends BundleController implements NSApplication.De
         NotificationServiceFactory.get().unregister();
         // Disable update
         updater.unregister();
+        profiles.unregister();
         //Writing usage info
         preferences.setProperty("uses", preferences.getInteger("uses") + 1);
         preferences.save();
