@@ -1108,6 +1108,9 @@ public abstract class Preferences implements Locales {
         this.setDefault("cryptomator.vault.autodetect", String.valueOf(true));
         this.setDefault("cryptomator.vault.masterkey.filename", "masterkey.cryptomator");
         this.setDefault("cryptomator.vault.pepper", "");
+
+        this.setDefault("profiles.discovery.updater.enable", String.valueOf(true));
+        this.setDefault("profiles.discovery.updater.url", "https://svn.cyberduck.io/trunk/profiles");
     }
 
     /**
