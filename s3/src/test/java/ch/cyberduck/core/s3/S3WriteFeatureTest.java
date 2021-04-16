@@ -12,18 +12,19 @@ import ch.cyberduck.core.features.Delete;
 import ch.cyberduck.core.features.Find;
 import ch.cyberduck.core.features.Write;
 import ch.cyberduck.core.http.HttpResponseOutputStream;
+import ch.cyberduck.core.io.MD5ChecksumCompute;
 import ch.cyberduck.core.io.SHA256ChecksumCompute;
 import ch.cyberduck.core.io.StreamCopier;
 import ch.cyberduck.core.transfer.TransferStatus;
 import ch.cyberduck.test.IntegrationTest;
 
-import org.apache.commons.text.RandomStringGenerator;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jets3t.service.model.StorageObject;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.UUID;
@@ -99,7 +100,7 @@ public class S3WriteFeatureTest extends AbstractS3Test {
         final TransferStatus status = new TransferStatus();
         status.setLength(-1L);
         final Path file = new Path(container, UUID.randomUUID().toString(), EnumSet.of(Path.Type.file));
-        final byte[] content = new RandomStringGenerator.Builder().build().generate(5 * 1024 * 1024).getBytes(StandardCharsets.UTF_8);
+        final byte[] content = RandomUtils.nextBytes(5 * 1024 * 1024);
         status.setChecksum(new SHA256ChecksumCompute().compute(new ByteArrayInputStream(content), status));
         try {
             feature.write(file, status, new DisabledConnectionCallback());
@@ -115,14 +116,17 @@ public class S3WriteFeatureTest extends AbstractS3Test {
         final S3WriteFeature feature = new S3WriteFeature(session);
         final Path container = new Path("test-eu-central-1-cyberduck", EnumSet.of(Path.Type.volume));
         final Path file = new Path(container, UUID.randomUUID().toString(), EnumSet.of(Path.Type.file));
-        final byte[] content = new RandomStringGenerator.Builder().build().generate(5 * 1024 * 1024).getBytes(StandardCharsets.UTF_8);
+        final byte[] content = RandomUtils.nextBytes(5 * 1024 * 1024);
+        final String hash = new MD5ChecksumCompute().compute(new ByteArrayInputStream(content), new TransferStatus()).hash;
         final TransferStatus status = new TransferStatus();
         status.setLength(content.length);
         status.setChecksum(new SHA256ChecksumCompute().compute(new ByteArrayInputStream(content), status));
         final HttpResponseOutputStream<StorageObject> out = feature.write(file, status, new DisabledConnectionCallback());
         new StreamCopier(status, status).transfer(new ByteArrayInputStream(content), out);
         out.close();
-        assertEquals(content.length, new S3AttributesFinderFeature(session).find(file).getSize());
+        final PathAttributes attributes = new S3AttributesFinderFeature(session).find(file);
+        assertEquals(content.length, attributes.getSize());
+        assertEquals(hash, StringUtils.remove(attributes.getETag(), "\""));
         new S3DefaultDeleteFeature(session).delete(Collections.singletonList(file), new DisabledLoginCallback(), new Delete.DisabledCallback());
     }
 }
