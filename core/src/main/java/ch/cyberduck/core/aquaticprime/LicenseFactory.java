@@ -152,7 +152,7 @@ public abstract class LicenseFactory extends Factory<License> {
     public static final License EMPTY_LICENSE = new License() {
         @Override
         public boolean verify(final LicenseVerifierCallback callback) {
-            return false;
+            return true;
         }
 
         @Override
